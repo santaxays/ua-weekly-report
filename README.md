@@ -148,10 +148,12 @@ The Claude system prompt is the core IP of this automation. The repo ships with 
 - [x] Slack pipeline (session 1)
 - [x] CSV parsing + metrics (session 2)
 - [x] Claude AI insights (session 3)
-- [ ] AppsFlyer API integration (session 4)
-- [ ] Cron schedule via GitHub Actions (session 5)
+- [ ] AppsFlyer API integration (session 4) — pending real client
+- [x] Cron schedule via GitHub Actions (session 5)
 - [ ] Multi-client config (one repo, many app/Slack pairs)
 - [ ] Anomaly detection beyond burning creatives (network-level, geo-level)
+
+The bot runs every Monday at 12:00 Moscow time (09:00 UTC). See [`.github/workflows/weekly-report.yml`](.github/workflows/weekly-report.yml).
 
 ---
 
