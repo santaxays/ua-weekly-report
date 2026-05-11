@@ -137,6 +137,12 @@ Three test files cover metric calculations and Claude API mocking. They run in u
 
 ---
 
+## Prompt Engineering
+
+The Claude system prompt is the core IP of this automation. The repo ships with a generic placeholder (`prompts/system_prompt.example.md`) so the code is runnable. The production prompt — tuned over real client engagements — lives in `prompts/system_prompt.ru.md` (gitignored). If you'd like to discuss building one for your team, [book a call](https://calendly.com/ilyasirotin/free-intro-call-20-min).
+
+---
+
 ## Roadmap
 
 - [x] Slack pipeline (session 1)

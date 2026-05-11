@@ -3,3 +3,6 @@
 __pycache__
 .DS_Store
 *.pyc
+prompts/system_prompt.ru.md
+prompts/system_prompt.en.md
+prompts/*.private.md

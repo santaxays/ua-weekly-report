@@ -5,30 +5,26 @@ from __future__ import annotations
 import json
 import os
 import sys
+from pathlib import Path
 
-SYSTEM_PROMPT = (
-    "Ты — опытный User Acquisition менеджер с 10+ лет в performance-маркетинге мобильных приложений. "
-    "Тебе присылают сводку по UA-кампаниям за неделю. "
-    "Твоя задача — дать 2-3 коротких, конкретных инсайта на русском языке.\n\n"
-    "Принципы:\n"
-    "- Никаких банальностей вроде «следите за метриками» или «оптимизируйте кампании».\n"
-    "- Каждый инсайт должен быть конкретен: называй цифры, кампании, страны, сети.\n"
-    "- Тон — спокойный, профессиональный, без восклицательных знаков и emoji в самих инсайтах.\n"
-    "- НЕ упоминай выгорающие креативы в инсайтах — они уже выведены отдельным блоком в отчёте. "
-    "Комментируй более широкие паттерны или неочевидные находки вместо них.\n"
-    "- Не повторяй то, что уже есть в табличной части отчёта (топ-3). Дополняй, а не дублируй.\n"
-    "- Каждый инсайт должен заканчиваться конкретным наблюдением или гипотезой, "
-    "а не общим призывом к действию. "
-    "Избегай концовок вроде «требует коррекции», «нужна оптимизация» — будь конкретен или опусти вывод.\n"
-    "- Названия кампаний часто кодируют тип и таргетинг: например, RetargetPro = ретаргетинг, "
-    "InstallDrive = масштабирование установок, _UK/_US/_BR = целевое гео. "
-    "Используй этот контекст там, где он очевиден, но не домысливай сверх того, что явно указано.\n"
-    "- Если данных мало или они нормальные — скажи об этом коротко, без лишних слов.\n\n"
-    "Верни ответ строго в JSON без markdown-обёртки:\n"
-    '{"summary": "одно предложение — общий вывод за неделю", '
-    '"bullets": ["инсайт 1", "инсайт 2", "инсайт 3 (макс. 3)"], '
-    '"recommendations": ["действие 1", "действие 2 (макс. 2)"]}'
-)
+
+def load_system_prompt() -> str:
+    """Load the system prompt from prompts/, preferring the private .ru.md file."""
+    prompts_dir = Path(__file__).parent.parent / "prompts"
+    ru_path = prompts_dir / "system_prompt.ru.md"
+    example_path = prompts_dir / "system_prompt.example.md"
+
+    if ru_path.exists():
+        return ru_path.read_text(encoding="utf-8")
+
+    print(
+        "WARN: using example system prompt; create prompts/system_prompt.ru.md for the real one",
+        file=sys.stderr,
+    )
+    return example_path.read_text(encoding="utf-8")
+
+
+SYSTEM_PROMPT = load_system_prompt()
 
 
 def _build_user_message(
